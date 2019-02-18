@@ -4,7 +4,7 @@
 # Create new App and get the four strings
 
 def oauth():
-    consumer_key_i = input("Type or paste your consumer key: ")
+    consumer_key_i = input("\nType or paste your consumer key: ")
     consumer_secret_i = input("Type or paste your consumer secret key: ")
     token_key_i = input("Type or paste your token key: ")
     token_secret_i = input("Type or paste your token secret key: ")
