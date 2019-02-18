@@ -14,25 +14,43 @@ ctx = ssl.create_default_context()
 ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
 
+def start_setup():
+    """
+    start_setup() -> dict
 
-print('')
-acct = input('Enter Twitter Account Name: ')
-url = twurl.augment(TWITTER_URL,
-                    {'screen_name': acct, 'count': '5'})
-print('Retrieving', url)
-connection = urllib.request.urlopen(url, context=ctx)
-data = connection.read().decode()
+    Returns Twitter Friends Json file for certain account name
+    Max number of friends data - 15
 
-js = json.loads(data)
+    """
+    print('\nThis is a module for getting Friends Json file for certain account')
+    print('')
+    acct = input('Enter Twitter Account Name: ')
+    url = twurl.augment(TWITTER_URL,
+                        {'screen_name': acct, 'count': '15'})
+    print('Retrieving', url)
+    connection = urllib.request.urlopen(url, context=ctx)
+    data = connection.read().decode()
+
+    js = json.loads(data)
+
+    return js
 
 def search(js):
     """
     dict -> None
+    dict -> dict
+    dict -> list
+    dict -> str
+    dict -> int
+    dict -> float
+    dict -> bool
 
     Makes console interfaced search platform
     for data from twitter json file
 
-    Returns none
+    Type 'E' to exit, 'B' to go back, 'R' to return current item and exit
+
+    Returns none if exit ('E') or certain type for item if return ('R')
     """
     temp = 0
     erlist = ["\n!!! You can not go back further !!!", "\n!!! Type int number in correct range !!!", "\n!!! Not found try again !!!"]
@@ -40,6 +58,9 @@ def search(js):
     history = []
     inputik = "Hello there"
     cur_item = js
+    print("\nThis is a module for observing a Json file")
+    print("You can 'open catalogs' by typing the name of the dict key, or by typing an index of an item")
+    print("To go back type 'B'\nTo exit type 'E'\nTo return and exit type'R'")
     while True:
         print('\nCatalogs or files:')
         if type(cur_item) == dict:
@@ -49,6 +70,9 @@ def search(js):
                 print(erlist[er])
                 er = -1
             inputik = input('\nSelect catalog (name, str): ')
+            if inputik == "R":
+                print("Returning current item...")
+                return cur_item
             if inputik == "B":
                 try:
                     cur_item = history[-1]
@@ -73,7 +97,11 @@ def search(js):
             if er != -1:
                 print(erlist[er])
                 er = -1
-            inputik = input('\nSelect item index (number, int)')
+            print("\nNumber of items: ", temp)
+            inputik = input('\nSelect item index (number, int, <!> start = 0 <!>): ')
+            if inputik == "R":
+                print("Returning current item...")
+                return cur_item
             if inputik == "B":
                 try:
                     cur_item = history[-1]
@@ -95,7 +123,10 @@ def search(js):
             if er != -1:
                 print(erlist[er])
                 er = -1
-            inputik = input("\nNo more catalogs to open\nTo exit type E\nTo go back type B\n")
+            inputik = input("\nNo more catalogs to open\nTo exit type - E\nTo go back type - B\nTo return current item - R\nYour input: ")
+            if inputik == "R":
+                print("\nReturning current item...")
+                return cur_item
             if inputik == "B":
                 try:
                     cur_item = history[-1]
@@ -108,4 +139,4 @@ def search(js):
     print("\nFinished succesfully")
 
 if __name__ == "__main__":
-    search(js)
+    print("Returned - ", search(start_setup()))
