@@ -25,8 +25,14 @@ def start_setup():
     print('\nThis is a module for getting Friends Json file for certain account')
     print('')
     acct = input('Enter Twitter Account Name: ')
+    fr_num = input('Enter how many friends do you want to include in json: ')
+    try:
+        if int(fr_num) > 100 or int(fr_num) < 1:
+            fr_num = '15'
+    except:
+        fr_num = '15'
     url = twurl.augment(TWITTER_URL,
-                        {'screen_name': acct, 'count': '15'})
+                        {'screen_name': acct, 'count': fr_num})
     print('Retrieving', url)
     connection = urllib.request.urlopen(url, context=ctx)
     data = connection.read().decode()
