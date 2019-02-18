@@ -1,6 +1,8 @@
+
 This program is getting twitter json file "friends"
 
-Function search allows you to observe the data from this file
+Function search allows you to observe the data from every json file
+
 
 You will need your API keys to be able to use this module
 Go to twitter developers page to see more information
